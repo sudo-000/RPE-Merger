@@ -15,7 +15,7 @@ while loop:
     else:
         print('\nError: Invalid input! Please try again.')
 del loop
-os.system("md \".\\Selected\" >nul & md \".\\All Charts\" >nul")
+os.system("md \"C:\\Temp\\Selected\" >nul & md \"C:\\Temp\\All Charts\" >nul")
 #Reading Chartlist.txt
 ChartlistRAW = open("Chartlist.txt", mode='r', encoding='UTF-8')
 ChartlistRAW = ChartlistRAW.read().splitlines()
@@ -33,7 +33,7 @@ del ChartlistTMP
 del ChartlistRAW
 #Create temp files for selection
 for index in range(len(ChartlistLST)):
-    File = open(".\\All Charts\\"+ChartlistLST[index][1].lstrip("Path: ")+".txt", mode="w", encoding='UTF-8')
+    File = open("C:\\Temp\\All Charts\\"+ChartlistLST[index][1].lstrip("Path: ")+".txt", mode="w", encoding='UTF-8')
     File.write("# Song details: \n\n")
     for lines in ChartlistLST[index]:
         File.write(lines + '\n')
@@ -42,7 +42,7 @@ del File
 del index
 del ChartlistLST
 #Call Explorer.exe (In case of mobile devices we use wfm.exe instead of explorer.exe)
-os.system("start \"Selected\" \"wfm.exe\" \".\\Selected\\\" & start \"All Charts\" \"wfm.exe\" \".\\All Charts\\\"")
+os.system("start \"\" \"wfm.exe\" \"C:\\Temp\"")
 os.system("cls")
 print('Welcome to 114514NotAvailable\'s RPE chart merger v2.1!')
 print('Note: Bundled with Ex:Phiedit v4.5, distributing this program separately is not allowed.\n')
@@ -55,10 +55,9 @@ print('You may rename these text files to re-order them but you should never edi
 print('You can also duplicate files if you want to overlap it with its self. \n')
 input('Press the return key when done...')
 #Process the user's selection
-os.system("md \".\\Selected\\Result\" >nul & attrib \".\\Selected\\Result\" +s +h & dir \".\\Selected\\*.txt\" /b /o:n > \".\\Selected\\Result\\.txt\"")
-os.system("del \".\\All Charts\" /f /s /q & rmdir \".\\All Charts\" /s /q")
-if os.path.getsize(".\\Selected\\Result\\.txt") <= 0: #File empty?
-    os.system("del \".\\Selected\" /f /s /q & rmdir \".\\Selected\" /s /q")
+os.system("md \"C:\\Temp\\Selected\\Result\" >nul & attrib \"C:\\Temp\\Selected\\Result\" +s +h & dir \"C:\\Temp\\Selected\\*.txt\" /b /o:n > \"C:\\Temp\\Selected\\Result\\.txt\"")
+if os.path.getsize("C:\\Temp\\Selected\\Result\\.txt") <= 0: #File empty?
+    os.system("del \"C:\\Temp\" /f /s /q & rmdir \"C:\\Temp\" /s /q")
     os.system("cls")
     print('Welcome to 114514NotAvailable\'s RPE chart merger v2.1!')
     print('Note: Bundled with Ex:Phiedit v4.5, distributing this program separately is not allowed.\n')
@@ -66,7 +65,7 @@ if os.path.getsize(".\\Selected\\Result\\.txt") <= 0: #File empty?
     time.sleep(5)
     quit()
 else: #The list file is not empty, GOOD! Let's move on.
-    result = open(".\\Selected\\Result\\.txt", mode='r', encoding='UTF-8')
+    result = open("C:\\Temp\\Selected\\Result\\.txt", mode='r', encoding='UTF-8')
     result = result.read().splitlines()
     #'result' now holds the list of files that exist in '.\Selected'
     opened_charts = []
@@ -143,14 +142,14 @@ else: #The list file is not empty, GOOD! Let's move on.
     print('Reading charts...')
     opened_chart_list = []
     for filename in result:
-        data = open(".\\Selected\\" + filename, mode='r', encoding='UTF-8').read().splitlines()
+        data = open("C:\\Temp\\Selected\\" + filename, mode='r', encoding='UTF-8').read().splitlines()
         opened_chart_list.append(data)
         opened_charts.append(json.load(open('.\\Resources\\' + data[3].lstrip("Path: ") + '\\' + data[6].lstrip("Chart: "), mode='r', encoding='UTF-8')))
         print('Loaded ' + filename.rstrip('.txt'))
     del filename
     del data
     ChartCount = 0
-    os.system("del \".\\Selected\" /f /s /q & rmdir \".\\Selected\" /s /q")
+    os.system("del \"C:\\Temp\" /f /s /q & rmdir \"C:\\Temp\" /s /q")
     if choice == '2':
         print('Time move begins...')
         chartlist_edit = open("Chartlist.txt", mode='a', encoding='UTF-8')
